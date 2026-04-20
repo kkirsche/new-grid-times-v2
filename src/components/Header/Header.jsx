@@ -1,14 +1,15 @@
-import { Menu, Search, User } from "react-feather";
-import styled from "styled-components";
+import { Menu, Search, User } from 'react-feather';
+import styled from 'styled-components';
 
-import { FAMILIES, QUERIES } from "../../constants";
+import { FAMILIES, QUERIES } from '../../constants';
 
-import Logo from "../Logo";
-import MaxWidthWrapper from "../MaxWidthWrapper";
+import Button from '../Button';
+import Logo from '../Logo';
+import MaxWidthWrapper from '../MaxWidthWrapper';
 
 const Header = () => {
   return (
-    <Wrapper>
+    <header>
       <SuperHeader>
         <Row>
           <ActionGroup>
@@ -19,45 +20,36 @@ const Header = () => {
               <Menu size={24} />
             </button>
           </ActionGroup>
-          <TabletAndDownActionGroup>
+          <ActionGroup>
             <button>
               <User size={24} />
             </button>
-          </TabletAndDownActionGroup>
+          </ActionGroup>
         </Row>
       </SuperHeader>
       <MainHeader>
+          <DesktopActionGroup>
+            <button>
+              <Search size={24} />
+            </button>
+            <button>
+              <Menu size={24} />
+            </button>
+          </DesktopActionGroup>
         <Logo />
+        <SubscribeWrapper><Button>Subscribe</Button><Subscriber href="#">Already a subscriber?</Subscriber></SubscribeWrapper>
       </MainHeader>
-      <DesktopOnlyActionGroup>
-        <SubscribeButton>Subscribe</SubscribeButton>
-        <AlreadySubscribed href="#">Already a subscriber?</AlreadySubscribed>
-      </DesktopOnlyActionGroup>
-    </Wrapper>
+    </header>
   );
 };
-
-const Wrapper = styled.header`
-  @media ${QUERIES.desktopAndUp} {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    max-width: min(100%, calc(1200px + 32px * 2));
-    margin-left: auto;
-    margin-right: auto;
-    padding-right: 32px;
-  }
-`;
 
 const SuperHeader = styled.div`
   padding: 16px 0;
   background: var(--color-gray-900);
   color: white;
 
-  @media ${QUERIES.desktopAndUp} {
-    color: var(--color-gray-900);
-    background: revert;
+  @media ${QUERIES.laptopAndUp} {
+    display: none;
   }
 `;
 
@@ -79,21 +71,11 @@ const ActionGroup = styled.div`
   }
 `;
 
-const TabletAndDownActionGroup = styled(ActionGroup)`
-  @media ${QUERIES.desktopAndUp} {
-    display: none;
-  }
-`;
-
-const DesktopOnlyActionGroup = styled(ActionGroup)`
+const DesktopActionGroup = styled(ActionGroup)`
   display: none;
 
-
-  @media ${QUERIES.desktopAndUp} {
-    display: flex;
-    flex-direction: column;
-    gap: revert;
-    align-items: center;
+  @media ${QUERIES.laptopAndUp} {
+    display: flex
   }
 `;
 
@@ -103,24 +85,40 @@ const MainHeader = styled(MaxWidthWrapper)`
   justify-content: center;
   margin-top: 32px;
   margin-bottom: 48px;
+
+  @media ${QUERIES.tabletAndUp} {
+    margin-top: 48px;
+    margin-bottom: 72px;
+  }
+
+  @media ${QUERIES.laptopAndUp} {
+    display: grid;
+    align-items: center;
+    justify-content: revert;
+    grid-template-columns: 1fr auto 1fr;
+    margin-top: 16px;
+    margin-bottom: 72px;
+  }
 `;
 
-const SubscribeButton = styled.button`
-  padding: 10px 24px;
-  text-transform: uppercase;
-  background-color: var(--color-primary);
-  color: white;
-  border-radius: 4px;
-  font-weight: 700;
-  font-size: 1rem;
-  font-family: ${FAMILIES.sansSerif};
+const SubscribeWrapper = styled.div`
+  display: none;
+
+  @media ${QUERIES.laptopAndUp} {
+    display: revert;
+    position: relative;
+    justify-self: end;
+  }
 `;
 
-const AlreadySubscribed = styled.a`
-  margin-top: 8px;
-  text-decoration: underline;
-  font-style: italic;
+const Subscriber = styled.a`
   font-family: ${FAMILIES.serif};
+  font-style: italic;
+  text-decoration: underline;
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  margin-block-start: 8px;
 `;
 
 export default Header;
