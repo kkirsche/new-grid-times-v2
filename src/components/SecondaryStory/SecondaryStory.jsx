@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 
 const SecondaryStory = ({ id, title, image, location, abstract }) => {
@@ -45,6 +44,11 @@ const Abstract = styled.p`
   grid-area: abstract;
   font-size: 1rem;
   white-space: pre-wrap;
+  align-self: start;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden; // necessary for line clamping
 `;
 
 export default SecondaryStory;
